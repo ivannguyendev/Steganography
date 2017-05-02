@@ -1,45 +1,29 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JProgressBar;
-import javax.swing.JToolBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
-import java.awt.Panel;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JSplitPane;
 import java.awt.FlowLayout;
 import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.JInternalFrame;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.CardLayout;
 import java.awt.Font;
-import javax.swing.JMenuBar;
-import javax.swing.border.BevelBorder;
 import java.awt.Color;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+
+
 
 public class steganography extends JFrame {
 
@@ -103,14 +87,29 @@ public class steganography extends JFrame {
 		JButton btnEncSrc = new JButton("Browser");
 		btnEncSrc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Browser b = new Browser();
+				txtEncSrc.setText(b.OpenB());
 			}
 		});
 		pnl_enc.add(btnEncSrc, "cell 4 1");
 		
 		JButton btnEncDes = new JButton("Browser");
+		btnEncDes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Browser b = new Browser();
+				txtEncDes.setText(b.OpenB());
+			}
+		});
 		pnl_enc.add(btnEncDes, "cell 4 3");
 		
 		JButton btnEmb = new JButton("Embedded");
+		btnEmb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				embTextToImages emb = new embTextToImages();
+				
+				
+			}
+		});
 		pnl_enc.add(btnEmb, "cell 4 5,alignx left");
 		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{pnl_enc, tabbedPane}));
 		
@@ -160,7 +159,6 @@ public class steganography extends JFrame {
 		panel_3.add(pgb);
 		
 		JPanel panel_5 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_5.getLayout();
 		panel_3.add(panel_5);
 		
 		JLabel label = new JLabel("Size:");
@@ -186,4 +184,5 @@ public class steganography extends JFrame {
 		panel_6.add(lblStegenogeaphy);
 
 	}
+	
 }
