@@ -106,8 +106,7 @@ public class steganography extends JFrame {
 		btnEmb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				embTextToImages emb = new embTextToImages();
-				
-				
+				emb.Encoder(txtEncSrc.getText(), txtEncDes.getText());
 			}
 		});
 		pnl_enc.add(btnEmb, "cell 4 5,alignx left");

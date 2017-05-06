@@ -1,46 +1,53 @@
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
-import com.sun.javafx.scene.layout.region.Margins.Converter;
 
 public class embTextToImages{
-	public void Embedded(String filesource, String filedestination){
+	
+	public void Encoder(String filesource, String filedestination){
 		BufferedImage bufimg = getImage(filedestination);
-		Graphics g = bufimg.getGraphics();
-		
-		byte msg[] = getText(filedestination).getBytes();
-		byte len[]   = Integer.toBinaryString(msg.length).getBytes();
-		byte img[]  = get_byte_data(bufimg);
 		
 		try
 		{
-			encode_text(img, len,  0); //0 first positiong
-			encode_text(img, msg, 32); //4 bytes of space for length: 4bytes*8bit = 32 bits
+			Embedded(bufimg, toBinary(IOMaster.readUTF8Text(filesource), 8)) ; //4 bytes of space for length: 4bytes*8bit = 32 bits
 		}
 		catch(Exception e)
 		{
 			JOptionPane.showMessageDialog(null, 
 "Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
 		}
-	}
-	public void Encoder(String filesource, String filedestination){
-		File fsrc = new File(filesource);
-		BufferedImage fdes = getImage(filedestination);
-		
 
 	}
 	public void Decoder(String filesource, String filedestination){
 		File fsrc = new File(filesource);
 		BufferedImage fdes = getImage(filedestination);
+		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+	              new FileOutputStream("filename.txt"), "utf-8"))) {
+		writer.write("asd");
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+	}
+	private void Embedded(BufferedImage img, String msg){
 		
-
 	}
 	private BufferedImage getImage(String f)
 	{
@@ -58,23 +65,38 @@ public class embTextToImages{
 		}
 		return image;
 	}
-	private String getText(String path){
-		steganography view = null;;
-		String content = null;
-		try {
-			content = new String(java.nio.file.Files.readAllBytes(new File(path).toPath()));
-			return content;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(view, "The File cannot be opened!", 
-					"Error!", JOptionPane.INFORMATION_MESSAGE);
-		}
-		return content;
-	}
 	private byte[] get_byte_data(BufferedImage image)
 	{
 		WritableRaster raster   = image.getRaster();
 		DataBufferByte buffer = (DataBufferByte)raster.getDataBuffer();
 		return buffer.getData();
+	}
+	
+	public static String toBinary(String str, int bits) {
+	    String result = "";
+	    String tmpStr;
+	    int tmpInt;
+	    char[] messChar = str.toCharArray();
+	    
+	    for (int i = 0; i < messChar.length; i++) {
+	        tmpStr = Integer.toBinaryString(messChar[i]);
+	        tmpInt = tmpStr.length();
+	        if(tmpInt != bits) {
+	            tmpInt = bits - tmpInt;
+	            if (tmpInt == bits) {
+	                result += tmpStr;
+	            } else if (tmpInt > 0) {
+	                for (int j = 0; j < tmpInt; j++) {
+	                    result += "0";
+	                }
+	                result += tmpStr;
+	            } 
+	        } else {
+	            result += tmpStr;
+	        }
+	        result += " "; // separator
+	    }
+	
+	    return result;
 	}
 }
