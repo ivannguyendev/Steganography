@@ -19,7 +19,6 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
@@ -125,6 +124,12 @@ public class steganography extends JFrame {
 		txtDecSrc.setColumns(30);
 		
 		JButton btnDecSrc = new JButton("Browser");
+		btnDecSrc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Browser b = new Browser();
+				txtDecSrc.setText(b.OpenB());
+			}
+		});
 		pnl_dec.add(btnDecSrc, "cell 5 1");
 		
 		JLabel lblDestination = new JLabel("Destination:");
@@ -136,9 +141,21 @@ public class steganography extends JFrame {
 		txtDecDes.setColumns(30);
 		
 		JButton btnDecDes = new JButton("Browser");
+		btnDecDes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Browser b = new Browser();
+				txtDecDes.setText(b.OpenB());
+			}
+		});
 		pnl_dec.add(btnDecDes, "cell 5 3");
 		
 		JButton btnExt = new JButton("Extract");
+		btnExt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				embTextToImages exct = new embTextToImages();
+				exct.Decoder(txtDecSrc.getText(), txtDecDes.getText());
+			}
+		});
 		pnl_dec.add(btnExt, "cell 4 5,aligny top");
 		
 		JPanel pnl_aut = new JPanel();
