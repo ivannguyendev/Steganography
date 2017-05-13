@@ -10,7 +10,7 @@ import com.sun.xml.internal.ws.commons.xmlutil.Converter;
 
 public class embTextToImages{
 	
-	public void Encoder(String filesource, String filedestination){
+	public void Encoder(String filesource, String filedestination, String pass){
 		BufferedImage bufimg = IOimages.getImage(filedestination);
 		String str = "";
 		try
@@ -21,14 +21,14 @@ public class embTextToImages{
 		{
 			JOptionPane.showMessageDialog(null, "Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
 		}
-		bufimg = Embedded(bufimg, ConvertUTF8.toBinary(	str, ConstantValue.bitrate)) ;
+		bufimg = Embedded(bufimg, Encryption.encode(pass, ConvertUTF8.toBinary(	str, ConstantValue.bitrate))) ;
 		IOimages.setImage(bufimg, "C:\\Users\\ivannguyen.it\\Desktop\\test\\IMGtest.jpg");
 	}
-	public void Decoder(String filesource, String filedestination){
-		String str = ConvertUTF8.tostring(Extract(IOimages.getImage(filesource)).substring(ConstantValue.bitrate),ConstantValue.bitrate);
+	public void Decoder(String filesource, String filedestination, String pass){
+		String str = Encryption.decode(pass, Extract(IOimages.getImage(filesource)).substring(ConstantValue.bitrate));
 		try
 		{
-			IOMaster.writeUTF8Text(filedestination, str);
+			IOMaster.writeUTF8Text(filedestination, ConvertUTF8.tostring(str,ConstantValue.bitrate));
 		}
 		catch(Exception e)
 		{
@@ -37,7 +37,7 @@ public class embTextToImages{
 		
 	}
 	private BufferedImage Embedded(BufferedImage img, String msg){
-			
+		// join BinaryString of length into msg
 		msg = ConvertUTF8.toBinary(Character.toString((char)((msg.length()+ConstantValue.bitrate))),ConstantValue.bitrate) + msg;
 		for(int i = 3-(msg.length()%3); i !=0; i--) msg += "0";
 		/*System.out.println(msg.length());
@@ -73,7 +73,7 @@ public class embTextToImages{
 	
 	private String Extract(BufferedImage img){
 		int tmp = 0, length = firstbit(img , ConstantValue.bitrate);
-		System.out.println(length);
+		//System.out.println(length);
 		String result ="";
 		for(int x = 0; x < img.getWidth(); x++){
 			for(int y = 0; y < img.getHeight(); y++){
