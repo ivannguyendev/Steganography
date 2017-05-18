@@ -17,7 +17,7 @@ public class IOMaster {
 	        String sR = "", sNewLine;
 
 	        while ((sNewLine = br.readLine()) != null){
-	            sR += sNewLine + "\n";
+	            sR += sNewLine + System.lineSeparator();//Function newline of System, shouldn't use \n
 	        }
 	        fi.close();
 	        return sR;

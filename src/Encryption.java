@@ -31,6 +31,7 @@ public class Encryption {
 					i = i + in + 1;
 				}catch(Exception e)
 				{
+					return String.valueOf(dataArr);
 				}
 			}
 		}

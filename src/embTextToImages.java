@@ -1,11 +1,8 @@
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import javax.swing.JOptionPane;
+import java.math.BigInteger;
 
-import com.sun.xml.internal.ws.commons.xmlutil.Converter;
+import javax.swing.JOptionPane;
 
 
 public class embTextToImages{
@@ -25,7 +22,7 @@ public class embTextToImages{
 		IOimages.setImage(bufimg, "C:\\Users\\ivannguyen.it\\Desktop\\test\\IMGtest.jpg");
 	}
 	public void Decoder(String filesource, String filedestination, String pass){
-		String str = Encryption.decode(pass, Extract(IOimages.getImage(filesource)).substring(ConstantValue.bitrate));
+		String str = Encryption.decode(pass, Extract(IOimages.getImage(filesource)).substring(ConstantValue.sizedocument));
 		try
 		{
 			IOMaster.writeUTF8Text(filedestination, ConvertUTF8.tostring(str,ConstantValue.bitrate));
@@ -38,7 +35,7 @@ public class embTextToImages{
 	}
 	private BufferedImage Embedded(BufferedImage img, String msg){
 		// join BinaryString of length into msg
-		msg = ConvertUTF8.toBinary(Character.toString((char)((msg.length()+ConstantValue.bitrate))),ConstantValue.bitrate) + msg;
+		msg = ConvertUTF8.toBinary(Character.toString((char)((msg.length()+ConstantValue.sizedocument))),ConstantValue.sizedocument) + msg;
 		for(int i = 3-(msg.length()%3); i !=0; i--) msg += "0";
 		/*System.out.println(msg.length());
 		System.out.println(Integer.parseInt(msg.substring(0, 16), 2));
@@ -72,7 +69,7 @@ public class embTextToImages{
 	}
 	
 	private String Extract(BufferedImage img){
-		int tmp = 0, length = firstbit(img , ConstantValue.bitrate);
+		long tmp = 0, length = firstbit(img , ConstantValue.sizedocument);
 		//System.out.println(length);
 		String result ="";
 		for(int x = 0; x < img.getWidth(); x++){
@@ -90,8 +87,10 @@ public class embTextToImages{
 			    //read LSB text of images
 				result += (r & ConstantValue.exc_bit); 
 				tmp++;	
+				if(tmp >= length) return result; // End Point of function
 				result += (g & ConstantValue.exc_bit);
 				tmp++; 
+				if(tmp >= length) return result; // End Point of function
 				result += (b & ConstantValue.exc_bit);
 				tmp++; 
 				if(tmp >= length) return result; // End Point of function
@@ -99,7 +98,7 @@ public class embTextToImages{
 		}
 		return result;
 	}
-	private int firstbit(BufferedImage img, int bits){
+	private long firstbit(BufferedImage img, int bits){
 		bits --;
 		int tmp = 0;
 		String result = "";
@@ -118,11 +117,13 @@ public class embTextToImages{
 			    //read LSB text of images
 				result += (r & ConstantValue.exc_bit); 
 				tmp++;	
-				if(tmp > bits) return Integer.parseInt(result, 2); // End Point of function
+				if(tmp > bits) return new BigInteger(result, 2).longValue(); // End Point of function
 				result += (g & ConstantValue.exc_bit);
-				tmp++; 
+				tmp++;
+				if(tmp > bits) return new BigInteger(result, 2).longValue(); // End Point of function
 				result += (b & ConstantValue.exc_bit);
-				tmp++; 
+				tmp++;
+				if(tmp > bits) return new BigInteger(result, 2).longValue(); // End Point of function
 			}
 		}
 		return -1;

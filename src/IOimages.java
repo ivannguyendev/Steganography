@@ -17,7 +17,7 @@ public class IOimages {
 		catch(Exception ex)
 		{
 			JOptionPane.showMessageDialog(null, 
-				"Image could not be read!","Error",JOptionPane.ERROR_MESSAGE);
+				"Image could not be Read!","Error",JOptionPane.ERROR_MESSAGE);
 		}
 		return image;
 	}
@@ -32,7 +32,7 @@ public class IOimages {
 		catch(Exception ex)
 		{
 			JOptionPane.showMessageDialog(null, 
-				"Image could not be read!","Error",JOptionPane.ERROR_MESSAGE);
+				"Image could not be Write!","Error",JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	/*private byte[] get_byte_data(BufferedImage image)
