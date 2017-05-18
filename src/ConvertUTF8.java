@@ -23,6 +23,7 @@ public class ConvertUTF8 {
 	            result += tmpStr;
 	        }        
 	    } 
+	    //System.out.println(result.length());
 	    return result;
 	}
 	public static String tostring(String str, int bits) {

@@ -7,19 +7,19 @@ public class Encryption {
 		if (pass.equals("")){
 			return data;				//End point of function
 		}
-		
 		//Create key integer from input pass
 		byte[] tmp = CreateKey(pass);
 		String key  = "";
 		for(int i = 0; i < pass.length(); i++){
 			key += Integer.toString(Math.abs(tmp[i]));
 		}
-		//System.out.println(key);		
+		System.out.println(key);
 		//Get Array index from key
 		int[] index = new int[key.length()];
 		for(int i = 0; i < key.length(); i++){
 			index[i] = key.charAt(i)-48;
 		}
+		
 		//Change state of bit, ever block array index
 		//System.out.println(index);
 		char[] dataArr = data.toCharArray();

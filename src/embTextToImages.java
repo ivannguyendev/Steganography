@@ -18,11 +18,11 @@ public class embTextToImages{
 		{
 			JOptionPane.showMessageDialog(null, "Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
 		}
-		bufimg = Embedded(bufimg, Encryption.encode(pass, ConvertUTF8.toBinary(	str, ConstantValue.bitrate))) ;
+		bufimg = Embedded(bufimg, pass, str) ;
 		IOimages.setImage(bufimg, "C:\\Users\\ivannguyen.it\\Desktop\\test\\IMGtest.jpg");
 	}
 	public void Decoder(String filesource, String filedestination, String pass){
-		String str = Encryption.decode(pass, Extract(IOimages.getImage(filesource)).substring(ConstantValue.sizedocument));
+		String str = Encryption.decode(pass, Extract(IOimages.getImage(filesource),pass).substring(ConstantValue.sizedocument));
 		try
 		{
 			IOMaster.writeUTF8Text(filedestination, ConvertUTF8.tostring(str,ConstantValue.bitrate));
@@ -33,11 +33,23 @@ public class embTextToImages{
 		}
 		
 	}
-	private BufferedImage Embedded(BufferedImage img, String msg){
+	private BufferedImage Embedded(BufferedImage img,String pass,String msg){
+		//Convert Value type Long to binary String
+		msg = Encryption.encode(pass, ConvertUTF8.toBinary(msg, ConstantValue.bitrate));
+		String binlength = Long.toBinaryString((msg.length()+ ConstantValue.sizedocument));
+		System.out.println(binlength);
+		if(binlength.length() < ConstantValue.sizedocument){
+			char[] t = new char[ConstantValue.sizedocument - binlength.length()];
+			for(int i = 0; i < t.length; i++) t[i] = '0';
+			binlength = String.valueOf(t) + binlength;
+		}
+		binlength = Encryption.encode(pass, binlength);
 		// join BinaryString of length into msg
-		msg = ConvertUTF8.toBinary(Character.toString((char)((msg.length()+ConstantValue.sizedocument))),ConstantValue.sizedocument) + msg;
+		msg =  binlength + msg;
+		System.out.println(binlength);
 		for(int i = 3-(msg.length()%3); i !=0; i--) msg += "0";
-		/*System.out.println(msg.length());
+		System.out.println(msg.length());
+		/*
 		System.out.println(Integer.parseInt(msg.substring(0, 16), 2));
 		System.out.println(msg.substring(0, 16));*/
 		char[] charArr = msg.toCharArray(); 
@@ -68,9 +80,13 @@ public class embTextToImages{
 		return img;
 	}
 	
-	private String Extract(BufferedImage img){
-		long tmp = 0, length = firstbit(img , ConstantValue.sizedocument);
-		//System.out.println(length);
+	private String Extract(BufferedImage img, String pass){
+		String binlength = firstbit(img , ConstantValue.sizedocument);
+		System.out.println(binlength);
+		binlength = Encryption.decode(pass,binlength);
+		System.out.println(binlength);
+		long tmp = 0, length = new BigInteger(binlength, 2).longValue();
+		System.out.println(length);
 		String result ="";
 		for(int x = 0; x < img.getWidth(); x++){
 			for(int y = 0; y < img.getHeight(); y++){
@@ -98,7 +114,7 @@ public class embTextToImages{
 		}
 		return result;
 	}
-	private long firstbit(BufferedImage img, int bits){
+	private String firstbit(BufferedImage img, int bits){
 		bits --;
 		int tmp = 0;
 		String result = "";
@@ -117,15 +133,15 @@ public class embTextToImages{
 			    //read LSB text of images
 				result += (r & ConstantValue.exc_bit); 
 				tmp++;	
-				if(tmp > bits) return new BigInteger(result, 2).longValue(); // End Point of function
+				if(tmp > bits) return result; // End Point of function
 				result += (g & ConstantValue.exc_bit);
 				tmp++;
-				if(tmp > bits) return new BigInteger(result, 2).longValue(); // End Point of function
+				if(tmp > bits) return result; // End Point of function
 				result += (b & ConstantValue.exc_bit);
 				tmp++;
-				if(tmp > bits) return new BigInteger(result, 2).longValue(); // End Point of function
+				if(tmp > bits) return result; // End Point of function
 			}
 		}
-		return -1;
+		return result;
 	}
 }
