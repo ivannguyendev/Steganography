@@ -19,13 +19,16 @@ public class embTextToImages{
 			JOptionPane.showMessageDialog(null, "Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
 		}
 		bufimg = Embedded(bufimg, pass, str) ;
-		IOimages.setImage(bufimg, "C:\\Users\\ivannguyen.it\\Desktop\\test\\IMGtest.jpg");
+		ViewImage b = new ViewImage(bufimg);
+		b.isVisible();
+		b.show();
 	}
-	public void Decoder(String filesource, String filedestination, String pass){
+	public void Decoder(String filesource, String pass){
 		String str = Encryption.decode(pass, Extract(IOimages.getImage(filesource),pass).substring(ConstantValue.sizedocument));
 		try
 		{
-			IOMaster.writeUTF8Text(filedestination, ConvertUTF8.tostring(str,ConstantValue.bitrate));
+			Viewtext b = new Viewtext(ConvertUTF8.tostring(str,ConstantValue.bitrate));
+			b.show();
 		}
 		catch(Exception e)
 		{

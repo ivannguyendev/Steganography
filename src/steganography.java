@@ -32,7 +32,6 @@ public class steganography extends JFrame {
 	private JTextField txtEncSrc;
 	private JTextField txtEncDes;
 	private JTextField txtDecSrc;
-	private JTextField txtDecDes;
 	private JPasswordField txtEncPass;
 	private JPasswordField txtDecPass;
 
@@ -143,7 +142,7 @@ public class steganography extends JFrame {
 		
 		JPanel pnl_dec = new JPanel();
 		tabbedPane.addTab("Decode", null, pnl_dec, null);
-		pnl_dec.setLayout(new MigLayout("", "[][][24.00][70.00][301.00][grow]", "[][][11.00][][9.00][][18.00][]"));
+		pnl_dec.setLayout(new MigLayout("", "[][][24.00][70.00][301.00][grow]", "[37.00][][11.00][][9.00][][18.00][]"));
 		
 		JLabel lblSource_1 = new JLabel("Source: ");
 		pnl_dec.add(lblSource_1, "cell 3 1,alignx left");
@@ -162,43 +161,25 @@ public class steganography extends JFrame {
 		});
 		pnl_dec.add(btnDecSrc, "cell 5 1");
 		
-		JLabel lblDestination = new JLabel("Destination:");
-		pnl_dec.add(lblDestination, "cell 3 3,alignx left");
-		
-		txtDecDes = new JTextField();
-		txtDecDes.setToolTipText("Th\u01B0 m\u1EE5c l\u01B0u tr\u1EEF d\u1EEF li\u1EC7u gi\u1EA3i m\u00E3");
-		pnl_dec.add(txtDecDes, "cell 4 3,alignx left");
-		txtDecDes.setColumns(30);
-		
-		JButton btnDecDes = new JButton("Browser");
-		btnDecDes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Browser b = new Browser();
-				txtDecDes.setText(b.OpenB());
-			}
-		});
-		pnl_dec.add(btnDecDes, "cell 5 3");
-		
 		JLabel label_1 = new JLabel("Password:");
-		pnl_dec.add(label_1, "cell 3 5,alignx left");
+		pnl_dec.add(label_1, "cell 3 3,alignx left");
 		
 		txtDecPass = new JPasswordField();
 		txtDecPass.setColumns(20);
-		pnl_dec.add(txtDecPass, "cell 4 5");
+		pnl_dec.add(txtDecPass, "cell 4 3");
 		
 		JButton btnExt = new JButton("Extract");
 		btnExt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				embTextToImages exct = new embTextToImages();
-				exct.Decoder(txtDecSrc.getText(), txtDecDes.getText(), txtDecPass.getText());
+				exct.Decoder(txtDecSrc.getText(), txtDecPass.getText());
 			}
 		});
 		
 		JRadioButton rdbtnDecPass = new JRadioButton("Gi\u1EA3i m\u00E3 v\u1EDBi m\u1EADt kh\u1EA9u");
 		rdbtnDecPass.setSelected(true);
 		rdbtnDecPass.setToolTipText("Th\u1EF1c hi\u1EC7n gi\u1EA3i m\u00E3 file v\u1EDBi password");
-		pnl_dec.add(rdbtnDecPass, "cell 4 6");
-		pnl_dec.add(btnExt, "flowx,cell 4 7,aligny top");
+		pnl_dec.add(rdbtnDecPass, "cell 4 5");
 		rdbtnDecPass.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -212,6 +193,7 @@ public class steganography extends JFrame {
 				}
 			}
 		});
+		pnl_dec.add(btnExt, "flowx,cell 4 7,aligny top");
 		
 		JPanel pnl_aut = new JPanel();
 		tabbedPane.addTab("Author", null, pnl_aut, null);
@@ -250,7 +232,7 @@ public class steganography extends JFrame {
 		flowLayout_2.setVgap(15);
 		contentPane.add(panel_6, BorderLayout.NORTH);
 		
-		JLabel lblStegenogeaphy = new JLabel("STEGANOGRAPHY");
+		JLabel lblStegenogeaphy = new JLabel("WANNA \r\n\r\nSTEGANOGRAPHY");
 		lblStegenogeaphy.setFont(new Font("Tekton Pro", Font.PLAIN, 30));
 		panel_6.add(lblStegenogeaphy);
 

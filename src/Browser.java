@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 
 public class Browser{
-	public String OpenB(){
+	public static String OpenB(){
 		JFrame frame = null;
 		JFileChooser c = new JFileChooser();
 	      // Demonstrate "Open" dialog:
@@ -14,7 +14,7 @@ public class Browser{
 	      }
 	      else return null;
 	}
-	public String SaveB(){
+	public static String SaveB(){
 		JFrame frame = null;
 		JFileChooser c = new JFileChooser();
 	      // Demonstrate "Open" dialog:
@@ -24,7 +24,7 @@ public class Browser{
 	      }
 	      else return null;
 	}
-	public File Getfile(String str ){
+	public static File Getfile(String str ){
 		File file = new File(str);
 		return file;
 	}
