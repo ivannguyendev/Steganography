@@ -2,6 +2,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
 import javax.swing.JOptionPane;
 
 public class IOimages {

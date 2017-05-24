@@ -9,10 +9,10 @@ public class embTextToImages{
 	
 	public void Encoder(String filesource, String filedestination, String pass){
 		BufferedImage bufimg = IOimages.getImage(filedestination);
-		String str = "";
+		byte[] str;
 		try
 		{
-			str = IOMaster.readUTF8Text(filesource);
+//			str = IOMaster.readUTF8Text(filesource);
 		}
 		catch(Exception e)
 		{
@@ -36,11 +36,11 @@ public class embTextToImages{
 		}
 		
 	}
-	private BufferedImage Embedded(BufferedImage img,String pass,String msg){
+	private BufferedImage Embedded(BufferedImage img,String pass,byte[] msg){
 		//Convert Value type Long to binary String
-		msg = Encryption.encode(pass, ConvertUTF8.toBinary(msg, ConstantValue.bitrate));
-		String binlength = Long.toBinaryString((msg.length()+ ConstantValue.sizedocument));
-		System.out.println(binlength);
+//		msg = Encryption.encode(pass, ConvertUTF8.toBinary(msg, ConstantValue.bitrate));
+//		String binlength = Long.toBinaryString((msg.length()+ ConstantValue.sizedocument));
+//		System.out.println(binlength);
 		if(binlength.length() < ConstantValue.sizedocument){
 			char[] t = new char[ConstantValue.sizedocument - binlength.length()];
 			for(int i = 0; i < t.length; i++) t[i] = '0';
@@ -49,9 +49,9 @@ public class embTextToImages{
 		binlength = Encryption.encode(pass, binlength);
 		// join BinaryString of length into msg
 		msg =  binlength + msg;
-		System.out.println(binlength);
+//		System.out.println(binlength);
 		for(int i = 3-(msg.length()%3); i !=0; i--) msg += "0";
-		System.out.println(msg.length());
+//		System.out.println(msg.length());
 		/*
 		System.out.println(Integer.parseInt(msg.substring(0, 16), 2));
 		System.out.println(msg.substring(0, 16));*/

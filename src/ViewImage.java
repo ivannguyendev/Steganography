@@ -65,7 +65,7 @@ public class ViewImage extends JFrame {
 	}
 	public void Default() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUndecorated(true);
+		//setUndecorated(true);
 		setBounds(100, 100, 545, 390);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

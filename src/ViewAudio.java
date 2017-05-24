@@ -10,11 +10,15 @@ import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.text.View;
@@ -25,6 +29,7 @@ public class ViewAudio extends JFrame {
 
 	private JPanel contentPane;
 	AudioInputStream audio;
+	Clip clip;
 	/**
 	 * Launch the application.
 	 */
@@ -49,7 +54,7 @@ public class ViewAudio extends JFrame {
 	}
 	public void Default() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUndecorated(true);
+		//setUndecorated(true);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -61,6 +66,11 @@ public class ViewAudio extends JFrame {
 		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JButton button = new JButton("Save");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IOaudio.setAudio(audio,"testAudio.wav");
+			}
+		});
 		button.setVerticalAlignment(SwingConstants.CENTER);
 		button.setToolTipText("L\u01B0u l\u1EA1i k\u1EBFt qu\u1EA3");
 		button.setAlignmentX(0.5f);
@@ -88,7 +98,17 @@ public class ViewAudio extends JFrame {
 		JButton btnplay = new JButton("Play");
 		btnplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					clip = AudioSystem.getClip();
+					clip.open(audio);
+					clip.start();
+				} catch (LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		panel_1.add(btnplay);
@@ -96,6 +116,7 @@ public class ViewAudio extends JFrame {
 		JButton btnStop = new JButton("Stop");
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clip.stop();
 			}
 		});
 		panel_1.add(btnStop);

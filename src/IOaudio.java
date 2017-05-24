@@ -5,13 +5,18 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.swing.JOptionPane;
 
+
+
 public class IOaudio {
 	public static AudioInputStream getAudio(String f){
 		AudioInputStream audio = null;
 		File file = new File(f);
 		try
 		{
+			
 			audio = AudioSystem.getAudioInputStream(file);
+		
+				
 		}
 		catch(Exception ex)
 		{

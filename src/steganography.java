@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.Component;
@@ -19,6 +20,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
@@ -74,6 +76,7 @@ public class steganography extends JFrame {
 		pnl_enc.add(lblSource, "cell 3 1,alignx left");
 		
 		txtEncSrc = new JTextField();
+		txtEncSrc.setText("C:\\Users\\ivannguyen.it\\Desktop\\test\\test.txt");
 		txtEncSrc.setToolTipText("\u0110\u01B0\u1EDDng d\u1EABn ch\u1EE9a d\u1EEF li\u1EC7u c\u1EA7n che gi\u1EA5u");
 		pnl_enc.add(txtEncSrc, "flowx,cell 4 1,alignx left");
 		txtEncSrc.setColumns(30);
@@ -82,6 +85,7 @@ public class steganography extends JFrame {
 		pnl_enc.add(lblDestination_1, "cell 3 3,alignx left");
 		
 		txtEncDes = new JTextField();
+		txtEncDes.setText("C:\\Users\\ivannguyen.it\\Desktop\\test\\Morning in the forest - over one hour of relaxing forest sounds - YouTube - \u0421\u0435\u0433\u043C\u0435\u043D\u04421(00_00_00.000-00_21_11.394).wav");
 		txtEncDes.setToolTipText("\u0110\u01B0\u1EDDng d\u1EABn file l\u00E0m v\u1ECF b\u1ECDc");
 		txtEncDes.setColumns(30);
 		pnl_enc.add(txtEncDes, "flowx,cell 4 3,alignx left");
@@ -114,8 +118,31 @@ public class steganography extends JFrame {
 		JButton btnEmb = new JButton("Embedded");
 		btnEmb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				embTextToImages emb = new embTextToImages();
-				emb.Encoder(txtEncSrc.getText(), txtEncDes.getText(), txtEncPass.getText());
+				boolean bool = false;
+				for(String t: ConstantValue.img){
+					System.out.println(t);
+					if(t.equals(Browser.Getextension(txtEncDes.getText()))) {
+						embTextToImages emb = new embTextToImages();
+						//System.out.println(Browser.Getextension(txtEncDes.getText()));
+						emb.Encoder(txtEncSrc.getText(), txtEncDes.getText(), txtEncPass.getText());
+						bool = true;
+					}
+				}
+				
+				for(String t: ConstantValue.audio){
+					if( t.equals(Browser.Getextension(txtEncDes.getText()))) {
+						embTextToAudio emb = new embTextToAudio();
+						try {
+							emb.Encoder(txtEncSrc.getText(), txtEncDes.getText(),txtEncPass.getText());
+							bool = true;
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
+				if(bool == false) JOptionPane.showMessageDialog(null, "File khong hop le!", "Alert",JOptionPane.INFORMATION_MESSAGE);
+					
 			}
 		});
 		
@@ -171,8 +198,22 @@ public class steganography extends JFrame {
 		JButton btnExt = new JButton("Extract");
 		btnExt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				embTextToImages exct = new embTextToImages();
-				exct.Decoder(txtDecSrc.getText(), txtDecPass.getText());
+				boolean bool = false;
+				for(String t: ConstantValue.img){
+					if(t.equals(Browser.Getextension(txtDecSrc.getText()))) {
+						embTextToImages exct = new embTextToImages();
+						exct.Decoder(txtDecSrc.getText(), txtDecPass.getText());
+						bool = true;
+					}
+				}
+				for(String t: ConstantValue.audio){
+					if(t.equals(Browser.Getextension(txtDecSrc.getText()))) {
+						embTextToAudio exct = new embTextToAudio();
+						exct.Decoder(txtDecSrc.getText(),txtDecPass.getText());
+						bool = true;
+					}
+				}	
+				if(bool == false) JOptionPane.showMessageDialog(null, "File khong hop le!", "Alert",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		

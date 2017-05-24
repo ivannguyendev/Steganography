@@ -12,6 +12,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -19,7 +23,7 @@ import java.awt.GridLayout;
 public class Viewtext extends JFrame {
 
 	private JPanel contentPane;
-	private String msg;
+	private byte[] msg;
 	/**
 	 * Launch the application.
 	 */
@@ -44,7 +48,7 @@ public class Viewtext extends JFrame {
 	}
 	public void Default() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUndecorated(true);
+		//setUndecorated(true);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,7 +61,7 @@ public class Viewtext extends JFrame {
 		JTextPane txtpnshow = new JTextPane();
 		txtpnshow.setEditable(false);
 		scrollPane.setViewportView(txtpnshow);
-		txtpnshow.setText(msg);
+		txtpnshow.setText(IOMaster.Stringbuffer(msg));
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
@@ -78,7 +82,7 @@ public class Viewtext extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					IOMaster.writeUTF8Text(Browser.OpenB(), msg);
-					JOptionPane.showMessageDialog(null, "Complete!", "Information",JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(null, "Complete!", "Information",JOptionPane.INFORMATION_MESSAGE);
 					setVisible(false); //you can't see me!
 					dispose(); //Destroy the JFrame object
 				} catch (IOException e1) {
@@ -88,7 +92,7 @@ public class Viewtext extends JFrame {
 			}
 		});
 	}
-	public Viewtext(String txt) {
+	public Viewtext(byte[] txt) {
 		msg = txt;
 		Default();
 		

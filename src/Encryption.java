@@ -23,6 +23,7 @@ public class Encryption {
 		//Change state of bit, ever block array index
 		//System.out.println(index);
 		char[] dataArr = data.toCharArray();
+		/*
 		for(int i = 0; i < dataArr.length ; ){
 			for(int in:index){
 				try
@@ -34,7 +35,7 @@ public class Encryption {
 					return String.valueOf(dataArr);
 				}
 			}
-		}
+		}*/
 		//System.out.println(dataArr);
 		return String.valueOf(dataArr); //not use .toString for convert char[] to String, because value is HEXA of address memory	
 	}
