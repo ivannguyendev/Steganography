@@ -63,11 +63,11 @@ public class Viewtext extends JFrame {
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
-		long startTime = new Date().getTime();
+//		long startTime = new Date().getTime();
 //		need 28ms with 34.5kB by JTextArea
 		textArea.append(IOMaster.Stringbuffer(msg));
-		long endTime = new Date().getTime();
-		System.out.println("Time dislay JTextArea run: "+ (endTime-startTime));
+//		long endTime = new Date().getTime();
+//		System.out.println("Time dislay JTextArea run: "+ (endTime-startTime));
 //		need 285ms with 34.5kB by JTextPanel
 		
 		JPanel panel = new JPanel();
