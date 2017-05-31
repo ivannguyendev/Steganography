@@ -6,19 +6,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.JButton;
-import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
 import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 public class Viewtext extends JFrame {

@@ -3,26 +3,19 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
 import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
-import javax.swing.text.View;
-
 import java.awt.Color;
 
 public class ViewAudio extends JFrame {
