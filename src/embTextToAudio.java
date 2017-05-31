@@ -37,6 +37,9 @@ public class embTextToAudio {
 		catch(Exception e)
 		{
 			JOptionPane.showMessageDialog(null, "Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
+		}finally {
+			audiofile.close();
+			byteArr = null;
 		}
 
 	}
@@ -44,7 +47,7 @@ public class embTextToAudio {
 	public void Decoder(String filesource, String pass)
 	{
 		AudioInputStream audiofile = IOaudio.getAudio(filesource);
-		BufferedImage key = IOimages.getImage(new File(filesource).getParentFile() + "\\key.png");
+		BufferedImage key = IOimages.getImage((new File(filesource).getParentFile() + "\\key.png"), true);
 		try
 		{
 			byte[] byteArr = Extract(audiofile, key, pass );
@@ -57,6 +60,16 @@ public class embTextToAudio {
 		{
 			JOptionPane.showMessageDialog(null, "Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
 		}
+		finally {
+			try {
+				key.flush();
+				audiofile.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
+			
+		}
 	}
 	
 	private byte[] readbyte(AudioInputStream audio)
@@ -64,7 +77,7 @@ public class embTextToAudio {
 		long bytesread = audio.getFrameLength();
 		int bytesPerFrame = audio.getFormat().getFrameSize();
 		audiobyte = new byte[(int)bytesread * bytesPerFrame];
-		System.out.println((int)bytesread * bytesPerFrame);
+//		System.out.println((int)bytesread * bytesPerFrame);
 		try {
 			audio.read(audiobyte);
 		   
@@ -142,7 +155,7 @@ public class embTextToAudio {
 //		So sánh ID trong audio có phải là ID trong key.png
 		if(!Arrays.equals(keyArr, tmp)){
 			k+=3;
-			length += new Random().nextInt(audiobyte.length/ConstantValue.bitrate-length-1);
+			length = new Random().nextInt(audiobyte.length/ConstantValue.bitrate-length-1)/16;
 		}
 		result = new byte[length];
 //		long startTime = new Date().getTime();

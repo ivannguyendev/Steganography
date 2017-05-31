@@ -64,6 +64,7 @@ public class keypass {
 		return b;
 	}
 	public static byte[] getbyte(BufferedImage img){
+		if(img == null) return null;
 		byte[] byteArr = new byte[24];
 		int p = 0, k = 0;
 		for(int i = 0; i < 8; i++){

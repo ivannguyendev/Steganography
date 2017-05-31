@@ -7,6 +7,10 @@ import javax.swing.JOptionPane;
 public class IOimages {
 	public static BufferedImage getImage(String path)
 	{
+		return getImage(path, false);
+	}
+	public static BufferedImage getImage(String path, boolean key)
+	{
 		BufferedImage 	image	= null;
 		File 		file 	= new File(path);
 		
@@ -16,8 +20,12 @@ public class IOimages {
 		}
 		catch(Exception ex)
 		{
-			JOptionPane.showMessageDialog(null, 
-				"Image could not be Read!","Error",JOptionPane.ERROR_MESSAGE);
+			if(!key) JOptionPane.showMessageDialog(null, "Image could not be Read!","Error",JOptionPane.ERROR_MESSAGE);
+			else{
+				return null;
+			}
+		}finally {
+			
 		}
 		return image;
 	}

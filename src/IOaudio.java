@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -22,6 +23,13 @@ public class IOaudio {
 		{
 			JOptionPane.showMessageDialog(null, 
 				"Audio could not be read!","Error",JOptionPane.ERROR_MESSAGE);
+		}finally {
+//			try {
+//				audio.close();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 		return audio;
 	}
@@ -36,6 +44,13 @@ public class IOaudio {
 		{
 			JOptionPane.showMessageDialog(null, 
 				"Audio could not be set!","Error",JOptionPane.ERROR_MESSAGE);
+		}finally {
+			try {
+				audio.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

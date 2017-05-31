@@ -1,22 +1,14 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.math.BigInteger;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Date;
 
 public class IOMaster {
 	 private IOMaster (){}
@@ -32,7 +24,7 @@ public class IOMaster {
 	    	byte[] byteArr = new byte[(int)IOMaster.sizefile(file)];
 	    	Arrays.fill(byteArr, (byte)0);
 	    	int posArr =0;
-	    	System.out.println((int)IOMaster.sizefile(file));
+//	    	System.out.println((int)IOMaster.sizefile(file));
 	    	
 	    	ByteBuffer bbuf = ByteBuffer.allocateDirect(ConstantValue.sizebufferNIO);
 	    	int nRead;

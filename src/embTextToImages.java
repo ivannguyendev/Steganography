@@ -32,7 +32,7 @@ public class embTextToImages{
 	}
 	public void Decoder(String filesource, String pass){
 		BufferedImage img = IOimages.getImage(filesource);
-		BufferedImage key = IOimages.getImage(new File(filesource).getParentFile() + "\\key.png");
+		BufferedImage key = IOimages.getImage((new File(filesource).getParentFile() + "\\key.png"), true);
 		byte[] byteArr = Extract(img, key, pass);
 		try
 		{
@@ -168,7 +168,7 @@ Endpoint1:{for(x = 0; x < img.getWidth(); x++){
 //		So sánh ID trong ảnh có phải là ID trong key.png
 		if(!Arrays.equals(keyArr, tmp)){
 			x+=2;
-			length += new Random().nextInt(img.getHeight()*img.getWidth()*3)/ConstantValue.bitrate - (length -1);
+			length = new Random().nextInt((img.getHeight()*img.getWidth()*3)/ConstantValue.bitrate - (length -1))/16;
 		}
 		
 		byte[] binArr = new byte[length*ConstantValue.bitrate];
