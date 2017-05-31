@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -58,10 +59,16 @@ public class Viewtext extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		JTextPane txtpnshow = new JTextPane();
-		txtpnshow.setEditable(false);
-		scrollPane.setViewportView(txtpnshow);
-		txtpnshow.setText(IOMaster.Stringbuffer(msg));
+		JTextArea textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		textArea.setEditable(false);
+		scrollPane.setViewportView(textArea);
+		long startTime = new Date().getTime();
+//		need 28ms with 34.5kB by JTextArea
+		textArea.append(IOMaster.Stringbuffer(msg));
+		long endTime = new Date().getTime();
+		System.out.println("Time dislay JTextArea run: "+ (endTime-startTime));
+//		need 285ms with 34.5kB by JTextPanel
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);

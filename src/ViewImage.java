@@ -1,11 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.internal.win32.BROWSEINFO;
 
 import javax.swing.ImageIcon;
@@ -40,6 +42,7 @@ public class ViewImage extends JFrame {
 
 	private JPanel contentPane;
 	BufferedImage bufimg;
+	BufferedImage buffkey;
 	/**
 	 * Launch the application.
 	 */
@@ -82,6 +85,7 @@ public class ViewImage extends JFrame {
 				String path =  Browser.OpenB();
 				if( path != null) {
 					IOimages.setImage(bufimg,path);
+					IOimages.setImage(buffkey,new File(path).getParentFile()+ "\\key.png");
 					setVisible(false);
 					dispose();
 				}
@@ -111,8 +115,9 @@ public class ViewImage extends JFrame {
 		scrollPane.setViewportView(lblImg);
 		lblImg.setIcon(new ImageIcon(bufimg));
 	}
-	public ViewImage(BufferedImage buff) {
+	public ViewImage(BufferedImage buff, BufferedImage key) {
 		bufimg = buff;
+		buffkey = key;
 		Default();
 	}
 	
